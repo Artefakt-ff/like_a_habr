@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ topic.title }}</title>
+    {% load staticfiles %}
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+</head>
+<body>
+<div class="container">
+    <h2>{{ topic.title }}</h2>
+    <p>{{ topic.body }}</p>
+
+    <form method="post" action="">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Comment!</button>
+    </form>
+
+    <form method="post" action="">
+        {% csrf_token %}
+        {% if like.is_active %}
+            <label for="like">Like?</label>
+            <input type="submit" value="liked" id="like" name="like" style="color:green">
+        {% else %}
+            <label for="like">Like?</label>
+            <input type="submit" value="disliked" id="like" name="like" style="color:red">
+        {% endif %}
+    </form>
+    {% for comment in comments %}
+        <p>{{ comment.body }}</p>
+        <small>{{ comment.creator.last_name }}</small>
+    {% endfor %}
+</div>
+</body>
+</html>
