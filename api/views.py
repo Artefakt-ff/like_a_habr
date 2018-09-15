@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from api.serializers import TopicSerializer, CommentSerializer
+from api.serializers import TopicSerializer, CommentSerializer, LikeSerializer
 from components.check_like import check_like
 from components.make_limit_and_offset import make_limit_and_offset
 from components.make_url import make_url
@@ -70,7 +70,8 @@ class TopicView(APIView):
                             like.save()
                         else:
                             return Response({'errors': 'Can not remove like'}, status=status.HTTP_403_FORBIDDEN)
-                        return Response(like, status=status.HTTP_200_OK)
+                        serializer = LikeSerializer(like)
+                        return Response(serializer.data, status=status.HTTP_200_OK)
                 except ObjectDoesNotExist:
                     return Response({"errors": "Invalid input"}, status=status.HTTP_400_BAD_REQUEST)
             return Response(status=status.HTTP_401_UNAUTHORIZED)

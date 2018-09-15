@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from wall.models import Topic, Comment
+from wall.models import Topic, Comment, TopicLike
 
 
 class TopicSerializer(serializers.ModelSerializer):
@@ -12,4 +12,10 @@ class TopicSerializer(serializers.ModelSerializer):
 class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
-        fields = ['id', 'body',  'created', 'topic', 'creator']
+        fields = ['id', 'body', 'created', 'topic', 'creator']
+
+
+class LikeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TopicLike
+        fields = ['topic', 'creator', 'is_active']
