@@ -22,7 +22,7 @@ class IndexView(generic.ListView):
 
 
 def details(request, topic_url):
-    topic = Topic.objects.get(url=topic_url)
+    topic = Topic.objects.get(url=topic_url)[0]
 
     if request.method == "POST":
         is_liked = request.POST.get("like")
